@@ -12,18 +12,16 @@
         </div>
         <div class="box-footer">
             <small>
-                <i>
-                    Posted {{ $thread->created_at }} by
-                    @if ($thread->dominion->isMonarch())
-                        <i class="ra ra-queen-crown text-red"></i>
-                    @endif
-                    <b>{{ $thread->dominion->name }}</b>
-                    @if ($thread->dominion->name !== $thread->dominion->ruler_name)
-                        ({{ $thread->dominion->ruler_name }})
-                    @endif
-                </i>
+                @if ($thread->dominion->isMonarch())
+                    <i class="ra ra-queen-crown text-red"></i>
+                @endif
+                <b>{{ $thread->dominion->name }}</b>
+                @if ($thread->dominion->name !== $thread->dominion->ruler_name)
+                    ({{ $thread->dominion->ruler_name }})
+                @endif
+                <i> - {{ $thread->created_at }}</i>
             </small>
-            @if ($selectedDominion->isMonarch()) 
+            @if ($selectedDominion->isMonarch())
                 <a href="{{ route('dominion.council.delete.thread', $thread) }}"><i class="fa fa-trash text-red"></i></a>
             @endif
         </div>
@@ -33,22 +31,24 @@
         @foreach ($thread->posts as $post)
             <div class="box">
                 <div class="box-body">
+                    <small>
+                        <i>{{ $thread->created_at }}</i>
+                    </small>
+                    <br>
+                    <br>
                     {!! Markdown::convertToHtml($post->body) !!}
                 </div>
                 <div class="box-footer">
                     <small>
-                        <i>
-                            Posted {{ $post->created_at }} by
-                            @if ($post->dominion->isMonarch())
-                                <i class="ra ra-queen-crown text-red"></i>
-                            @endif
-                            <b>{{ $post->dominion->name }}</b>
-                            @if ($post->dominion->name !== $post->dominion->ruler_name)
-                                ({{ $post->dominion->ruler_name }})
-                            @endif
-                        </i>
+                        @if ($post->dominion->isMonarch())
+                            <i class="ra ra-queen-crown text-red"></i>
+                        @endif
+                        <b>{{ $post->dominion->name }}</b>
+                        @if ($post->dominion->name !== $post->dominion->ruler_name)
+                            ({{ $post->dominion->ruler_name }})
+                        @endif
                     </small>
-                    @if ($selectedDominion->isMonarch()) 
+                    @if ($selectedDominion->isMonarch())
                         <a href="{{ route('dominion.council.delete.post', $post) }}"><i class="fa fa-trash text-red"></i></a>
                     @endif
                 </div>
